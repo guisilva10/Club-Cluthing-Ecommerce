@@ -1,8 +1,11 @@
-import './App.css'
+import { FunctionComponent } from 'react'
+import HomePage from './pages/home/home.page'
 
-const App = () => {
+// Components
+
+const App: FunctionComponent = () => {
   return (
-   <h1>Ola</h1>
+    <HomePage/>
   )
 }
 
