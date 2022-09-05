@@ -8,7 +8,7 @@ const Colors = {
     dark: '#212529',
     white: '#f8f9fa'
   },
-  inpurt: {
+  input: {
     background: '#e9ecef',
     placeholder: '#6c757d'
   },
