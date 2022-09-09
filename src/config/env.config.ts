@@ -1,5 +1,5 @@
 const env = {
-  apiUrl: 'https://club-ecommerce-api.herokuapp.com'
+  apiUrl: process.env.REACT_APP_API_URL
 }
 
 export default env
