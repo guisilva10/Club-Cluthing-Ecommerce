@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import { addDoc, collection } from 'firebase/firestore'
 import { AuthError, createUserWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 // Components
 import CustomButton from '../../components/custom-button/custom-button.component'
@@ -23,6 +23,7 @@ import {
 // utilities
 import { auth, db } from '../../config/firebase.config'
 import { UserContext } from '../../contexts/user.context'
+import Loading from '../../components/loading/loading.component'
 
 interface SignUpForm {
   firstName: string
@@ -41,6 +42,8 @@ const SignUpPage = () => {
     formState: { errors }
   } = useForm<SignUpForm>()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const { isAuthenticated } = useContext(UserContext)
   const navigate = useNavigate()
   useEffect(() => {
@@ -53,6 +56,7 @@ const SignUpPage = () => {
 
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
+      setIsLoading(true)
       const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password)
 
       await addDoc(collection(db, 'users'), {
@@ -68,12 +72,17 @@ const SignUpPage = () => {
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return setError('email', { type: 'alreadyInUse' })
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     <>
       <Header />
+      {
+        isLoading && <Loading/>
+      }
 
       <SignUpContainer>
         <SignUpContent>
