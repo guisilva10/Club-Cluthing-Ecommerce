@@ -15,14 +15,14 @@ justify-content:space-between;
 margin-top:7px;
 
 p{
-  font-size:1rem;
+  font-size:18px;
   font-weight:500;
 }
 `
 export const ProductImage = styled.div<ProductImageProps>`
 background-image: ${(props) => `url('${props.imageUrl}')`};
 height: 380px;
-width: 280px;
+width: 300px;
 background-size:cover;
 background-repeat:no-repeat;
 background-position:center;

@@ -12,6 +12,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { userConverter } from './converters/firestore.converters'
 import Loading from './components/loading/loading.component'
 import ExplorePage from './pages/explore/explore.page'
+import CategoryDetailPage from './pages/category-details/category-details.page'
 
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
@@ -44,6 +45,7 @@ const App: FunctionComponent = () => {
    <Routes>
     <Route path='/' element={<HomePage/>}/>
     <Route path='/explore' element={<ExplorePage/>}/>
+    <Route path='/category/:id' element={<CategoryDetailPage/>}/>
     <Route path='/login' element={<LoginPage/>}/>
     <Route path='/sign-up' element={<SignUpPage/>}/>
    </Routes>
