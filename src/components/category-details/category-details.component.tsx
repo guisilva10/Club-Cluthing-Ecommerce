@@ -6,7 +6,7 @@ import Category from '../../types/category.types'
 import Loading from '../loading/loading.component'
 import { BiChevronLeft } from 'react-icons/bi'
 
-import { Container, CategoryTitle, ProductContainer, IconContainer } from './category-details.styles'
+import { Container, CategoryTitle, ProductsContainer, IconContainer } from './category-details.styles'
 import ProductItem from '../product-item/product-item.component'
 import { useNavigate } from 'react-router-dom'
 
@@ -57,11 +57,11 @@ const CategoryDetails: FunctionComponent<CategorDetailsProps> = ({ categoryId })
     <p>Explorar {category?.displayName}</p>
       </CategoryTitle>
 
-      <ProductContainer>
+      <ProductsContainer>
         {category?.products.map((product) => (
           <ProductItem key={product.id} product={product}/>
         ))}
-      </ProductContainer>
+      </ProductsContainer>
     </Container>
 
   )

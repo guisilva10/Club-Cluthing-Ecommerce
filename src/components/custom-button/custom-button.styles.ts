@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Colors from '../../theme/theme.colors'
 
 export const CustomButtonContainer = styled.button`
-  width: 100%;
+  width: 100% auto;
   background-color: ${Colors.background.dark};
   color: ${Colors.text.white};
   display: flex;
