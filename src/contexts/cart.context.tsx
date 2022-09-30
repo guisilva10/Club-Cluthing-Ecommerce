@@ -39,6 +39,7 @@ const CartContextProvider: FunctionComponent<PropsChildren> = ({ children }) => 
     const productsFromLocalStorage = JSON.parse(
       localStorage.getItem('cartProducts')!
     )
+
     setProducts(productsFromLocalStorage)
   }, [])
 
