@@ -12,7 +12,8 @@ const Colors = {
     background: '#e9ecef',
     placeholder: '#6c757d'
   },
-  error: '#ff6a4a'
+  error: '#ff6a4a',
+  success: '#198754'
 }
 
 export default Colors
