@@ -3,11 +3,14 @@ import { signOut } from 'firebase/auth'
 import { useContext } from 'react'
 import { BsCart3 } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { useNavigate } from 'react-router-dom'
+
+// utilities
 import { auth } from '../../config/firebase.config'
 import { CartContext } from '../../contexts/cart.context'
+import { logoutUser } from '../../store/reducers/user/user.action'
 
+// styles
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './header.styles'
 
 const Header = () => {
@@ -36,7 +39,7 @@ const Header = () => {
   }
 
   const handleSignOutClick = () => {
-    dispatch({ type: 'LOGOUT_USER' })
+    dispatch(logoutUser())
     signOut(auth)
   }
 
