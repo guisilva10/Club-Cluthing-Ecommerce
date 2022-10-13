@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import validator from 'validator'
 import { addDoc, collection } from 'firebase/firestore'
 import { AuthError, createUserWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Components
 import CustomButton from '../../components/custom-button/custom-button.component'
@@ -22,8 +22,8 @@ import {
 
 // utilities
 import { auth, db } from '../../config/firebase.config'
-import { UserContext } from '../../contexts/user.context'
 import Loading from '../../components/loading/loading.component'
+import { useSelector } from 'react-redux'
 
 interface SignUpForm {
   firstName: string
@@ -44,7 +44,8 @@ const SignUpPage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useSelector((rootReducer: any) => rootReducer.userReducer)
+
   const navigate = useNavigate()
   useEffect(() => {
     if (isAuthenticated) {

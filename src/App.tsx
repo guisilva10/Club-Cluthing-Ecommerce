@@ -1,4 +1,5 @@
-import { FunctionComponent, useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { FunctionComponent, useState, useEffect } from 'react'
 import HomePage from './pages/home/home.page'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/login/login.page'
@@ -7,7 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from './config/firebase.config'
 
 // Components
-import { UserContext } from './contexts/user.context'
+
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { userConverter } from './converters/firestore.converters'
 import Loading from './components/loading/loading.component'
@@ -21,28 +22,33 @@ import PaymentConfirmationPage from './pages/payment-confirmation/payment-confir
 const App: FunctionComponent = () => {
   const [isInitializing, setIsInitializing] = useState(true)
 
-  const { isAuthenticated, loginUser, logoutUser } = useContext(UserContext)
+  const dispatch = useDispatch()
 
-  onAuthStateChanged(auth, async (user) => {
-    const isSignInOut = isAuthenticated && !user
-    if (isSignInOut) {
-      logoutUser()
+  const { isAuthenticated } = useSelector((rootReducer: any) => rootReducer.userReducer)
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      const isSignInOut = isAuthenticated && !user
+      if (isSignInOut) {
+        dispatch({ type: 'LOGOUT_USER' })
+        return setIsInitializing(false)
+      }
+
+      const isSigningIn = !isAuthenticated && user
+      if (isSigningIn) {
+        const querySnapshot = await getDocs(
+          query(collection(db, 'users').withConverter(userConverter), where('id', '==', user.uid))
+        )
+        const userFromFirestore = querySnapshot.docs[0]?.data()
+
+        dispatch({ type: 'LOGIN_USER', payload: userFromFirestore })
+
+        return setIsInitializing(false)
+      }
       return setIsInitializing(false)
-    }
+    })
+  }, [dispatch])
 
-    const isSigningIn = !isAuthenticated && user
-    if (isSigningIn) {
-      const querySnapshot = await getDocs(
-        query(collection(db, 'users').withConverter(userConverter), where('id', '==', user.uid))
-      )
-      const userFromFirestore = querySnapshot.docs[0]?.data()
-
-      loginUser(userFromFirestore)
-
-      return setIsInitializing(false)
-    }
-    return setIsInitializing(false)
-  })
   if (isInitializing) return <Loading/>
   return (
    <BrowserRouter>
