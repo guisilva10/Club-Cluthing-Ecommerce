@@ -23,7 +23,7 @@ import {
 // utilities
 import { auth, db } from '../../config/firebase.config'
 import Loading from '../../components/loading/loading.component'
-import { useSelector } from 'react-redux'
+import { UseAppSelector } from '../../hooks/redux.hooks'
 
 interface SignUpForm {
   firstName: string
@@ -44,7 +44,7 @@ const SignUpPage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { isAuthenticated } = useSelector((rootReducer: any) => rootReducer.userReducer)
+  const { isAuthenticated } = UseAppSelector((rootReducer) => rootReducer.userReducer)
 
   const navigate = useNavigate()
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { FunctionComponent, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -14,6 +14,7 @@ import CheckoutPage from './pages/checkout/checkout.page'
 // utilities
 import { loginUser, logoutUser } from './store/reducers/user/user.action'
 import { userConverter } from './converters/firestore.converters'
+import { UseAppSelector } from './hooks/redux.hooks'
 import { auth, db } from './config/firebase.config'
 
 // Components
@@ -29,7 +30,7 @@ const App: FunctionComponent = () => {
 
   const dispatch = useDispatch()
 
-  const { isAuthenticated } = useSelector((rootReducer: any) => rootReducer.userReducer)
+  const { isAuthenticated } = UseAppSelector((rootReducer) => rootReducer.userReducer)
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
